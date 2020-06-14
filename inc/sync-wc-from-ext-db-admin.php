@@ -35,6 +35,8 @@ function sync_wc_from_ext_db_page () {
                             <input type="text" id="dbusername" name="dbusername"><br><br>
                             <label for="dbpassw">Database password:</label><br>
                             <input type="text" id="dbpassw" name="dbpassw"><br><br>
+                            <label for="dbname">Database name:</label><br>
+                            <input type="text" id="dbname" name="dbname"><br><br>
                             <label for="dbtablename">Database table name:</label><br>
                             <input type="text" id="dbtablename" name="dbtablename"><br><br>
                             <label for="dbproductssku">Database product column name:</label><br>

@@ -15,6 +15,7 @@ function sync_wc_from_ext_db_page_save_to_db() {
             'host' => $_POST['dbhost'],
             'username' =>$_POST['dbusername'],
             'pw' => $_POST['dbpassw'],
+            'db_name' => $_POST['dbname'],
             'table_name' => $_POST['dbtablename'],
             'product_column_name' => $_POST['dbproductssku'],
             'product_stock_column_name' => $_POST['dbproductsstock']

@@ -14,6 +14,7 @@ $sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name .'(
     host varchar(55) NOT NULL,
     username varchar(55) NOT NULL,
     pw varchar(55) NOT NULL,
+    db_name varchar(55) NOT NULL,
     table_name varchar(55) NOT NULL,
     product_column_name varchar(55) NOT NULL,
     product_stock_column_name varchar(55) NOT NULL,
