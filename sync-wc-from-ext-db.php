@@ -52,8 +52,8 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
 
         function enqueue() {
             // enqueeu all our scripts
-            wp_enqueue_style( 'myPluginstyle', plugins_url( '/assests/admin-styles.css', __FILE__ ) );
-            wp_enqueue_script( 'myPluginstyle', plugins_url( '/assests/admin-scripts.js', __FILE__ ) );
+            wp_enqueue_style( 'myPluginstyle', plugins_url( '/assests/admin-styles.css', __FILE__ ), false, '1.0.0' );
+            wp_enqueue_script( 'myPluginstyle', plugins_url( '/assests/admin-scripts.js', __FILE__ ), false, '1.0.0' );
         }
     }
 
