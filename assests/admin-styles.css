@@ -2,3 +2,13 @@
     font-size: 16px;
     line-height: initial;
 }
+
+#connection_list_page table {
+    width: 100%;
+    border: 1px solid black;
+}
+
+#connection_list_page th,
+#connection_list_page td {
+    border: 1px solid black;
+}

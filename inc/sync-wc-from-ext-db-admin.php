@@ -3,6 +3,7 @@
 * @package SyncWCFromExtDB
 */
 require_once plugin_dir_path(__FILE__) . '../functions/save-ext-db-data.php';
+require_once plugin_dir_path(__FILE__) . '../functions/edit-db-list.php';
 
 add_action( 'admin_menu', 'sync_wc_from_ext_db_menu' );
 function sync_wc_from_ext_db_menu() {
@@ -14,6 +15,7 @@ function sync_wc_from_ext_db_menu() {
     $icon_url   = 'dashicons-media-code';
     $position   = 4;
     add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
+    add_submenu_page('sync_wc_from_ext_db', 'Database list', 'Database list', 'manage_options', 'sync_wc_from_ext_db_list', 'sync_wc_from_ext_db_connection_list' );
 }
 //save-ext-db-data.php
 function sync_wc_from_ext_db_page () {
