@@ -3,7 +3,6 @@
 * @package SyncWCFromExtDB
 */
 
-
 class SyncWCFromExtDBDeactivate
 {
     public static function deactivate() {

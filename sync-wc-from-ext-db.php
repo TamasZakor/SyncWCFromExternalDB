@@ -71,7 +71,7 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
     register_deactivation_hook( __FILE__, array( 'SyncWCFromExtDBDeactivate', 'deactivate') );
 
     // uninstall
-    register_uninstall_hook( __FILE__, 'uninstall_sync_wc_from_ext_db' );
+    register_uninstall_hook( __FILE__, array( 'SyncWCFromExtDBDeactivate', 'uninstall') );
 
     require_once plugin_dir_path(__FILE__) . 'functions/create-db.php';
     require_once plugin_dir_path(__FILE__) . 'inc/sync-wc-from-ext-db-admin.php';
