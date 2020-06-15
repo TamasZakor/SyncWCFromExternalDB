@@ -7,7 +7,7 @@ Missing fix:
 Missing function:
   - Edit sql connection parameter on Connection list
     - Add button after the connection param row (e.g: Edit, Remove)
-      - Write sql function for this button
+        - Write sql function for this button
 
   - Update product stock on product single page and checkout page
     - Add hook for woocommerce single page loading
@@ -19,5 +19,6 @@ Missing function:
     - query last orders
     - add new table where store the sended orders
     - send not sended orders
-   
+  
+  - ?Maybe refactor the folder structure and rename the file?
   
