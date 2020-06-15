@@ -55,6 +55,7 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
             wp_enqueue_style( 'myPluginstyle', plugins_url( '/assests/admin-styles.css', __FILE__ ), false, '1.0.0' );
             wp_enqueue_script( 'myPluginstyle', plugins_url( '/assests/admin-scripts.js', __FILE__ ), false, '1.0.0' );
         }
+
     }
 
     if ( class_exists( 'SyncWCFromExtDB' ) ) {
@@ -68,6 +69,9 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
     // deactivation
     require_once plugin_dir_path(__FILE__) . 'inc/sync-wc-from-ext-db-deactivate.php';
     register_deactivation_hook( __FILE__, array( 'SyncWCFromExtDBDeactivate', 'deactivate') );
+
+    // uninstall
+    register_uninstall_hook( __FILE__, 'uninstall_sync_wc_from_ext_db' );
 
     require_once plugin_dir_path(__FILE__) . 'functions/create-db.php';
     require_once plugin_dir_path(__FILE__) . 'inc/sync-wc-from-ext-db-admin.php';
