@@ -24,6 +24,7 @@ function sync_wc_from_ext_db_query_from_extern_db() {
                     array( 'sku' => $row['product_sku'] )
                 );
             }
+        $conn->close();
         } else {
             echo "Could not query any data!";
         }
