@@ -5,6 +5,9 @@ Missing fix:
   - sql close connection after get data from externel db
 
 Missing function:
+  - Uninstall function
+      - Write db clean
+
   - Edit sql connection parameter on Connection list
     - Add button after the connection param row (e.g: Edit, Remove)
         - Write sql function for this button
