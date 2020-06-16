@@ -2,23 +2,10 @@
 /**
 * @package SyncWCFromExtDB
 */
-require_once plugin_dir_path(__FILE__) . '../functions/save-ext-db-data.php';
-require_once plugin_dir_path(__FILE__) . '../functions/edit-db-list.php';
 
-add_action( 'admin_menu', 'sync_wc_from_ext_db_menu' );
-function sync_wc_from_ext_db_menu() {
-    $page_title = 'Sync WC from Ext DB';
-    $menu_title = 'Sync WC';
-    $capability = 'manage_options';
-    $menu_slug  = 'sync_wc_from_ext_db';
-    $function   = 'sync_wc_from_ext_db_page';
-    $icon_url   = 'dashicons-media-code';
-    $position   = 4;
-    add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
-    add_submenu_page('sync_wc_from_ext_db', 'Database list', 'Database list', 'manage_options', 'sync_wc_from_ext_db_list', 'sync_wc_from_ext_db_connection_list' );
-}
-//save-ext-db-data.php
-function sync_wc_from_ext_db_page () {
+require_once plugin_dir_path(__FILE__) . '../functions/save-ext-db-data.php';
+
+function sync_wc_from_ext_db_page() {
     $admin_page = '<h1 id="H1-admin">
                      <p>Synchronize Woocommerce product stock with extern databasa</p>
                    </h1>';
@@ -50,5 +37,3 @@ function sync_wc_from_ext_db_page () {
 
     print($admin_page);
 }
-
-add_action ( 'admin_post_custom_form_submit' , 'sync_wc_from_ext_db_page_save_to_db');

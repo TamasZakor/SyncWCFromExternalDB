@@ -43,11 +43,49 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
 
             // hook custom css on fron-end side
             //add_action( 'wp_enqueue_scripts', array($this, 'enqueue') );
+
+            add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
+            add_action( 'admin_menu', array( $this, 'add_admin_subpages' ) );
+            
+            require_once plugin_dir_path(__FILE__) . 'functions/save-ext-db-data.php';
+            add_action ( 'admin_post_custom_form_submit', 'sync_wc_from_ext_db_page_save_to_db');
         }
 
         function activate() {
             require_once plugin_dir_path(__FILE__) . 'inc/sync-wc-from-ext-db-activate.php';
             SyncWCFromExtDBActivate::activate();
+        }
+
+        public function add_admin_pages() {
+            $page_title = 'Sync WC from Ext DB';
+            $menu_title = 'Sync WC';
+            $capability = 'manage_options';
+            $menu_slug  = 'sync_wc_from_ext_db';
+            $function   = array( $this, 'admin_index');
+            $icon_url   = 'dashicons-store';
+            $position   = 110;
+            add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
+        }
+
+        public function  add_admin_subpages() {
+            add_submenu_page('sync_wc_from_ext_db',
+                             'Database list',
+                             'Database list',
+                             'manage_options',
+                             'sync_wc_from_ext_db_list',
+                              array( $this, 'admin_subpage_index')
+                             );
+        }
+
+        public function admin_index() {
+            require_once plugin_dir_path(__FILE__) . 'templates/sync-wc-from-ext-db-admin.php';
+            sync_wc_from_ext_db_page();
+
+        }
+
+        public function admin_subpage_index() {
+            require_once plugin_dir_path(__FILE__) . 'functions/edit-db-list.php';
+            sync_wc_from_ext_db_connection_list();
         }
 
         function enqueue() {
@@ -74,5 +112,4 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
     register_uninstall_hook( __FILE__, array( 'SyncWCFromExtDBDeactivate', 'uninstall') );
 
     require_once plugin_dir_path(__FILE__) . 'functions/create-db.php';
-    require_once plugin_dir_path(__FILE__) . 'inc/sync-wc-from-ext-db-admin.php';
 }
