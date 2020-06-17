@@ -10,7 +10,7 @@ Version: 1.0.0
 Author: Thomas "Elabrobyte" Zakor
 Author URI: http://example.com
 License: GPLv2 or later
-Text Domain: sync_wc_from_ext_db
+Text Domain: sync_wc_from_ext_db-plugin
 */
 
 /*
@@ -37,7 +37,14 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
 
     class SyncWCFromExtDB
     {
-        public function register() {
+
+        public $plugin;
+
+        function __construct() {
+            $this->plugin = plugin_basename(__FILE__);
+        }
+
+        function register() {
             // hook custom css on admin side
             add_action( 'admin_enqueue_scripts', array($this, 'enqueue') );
 
@@ -49,7 +56,16 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
             
             require_once plugin_dir_path(__FILE__) . 'functions/save-ext-db-data.php';
             add_action ( 'admin_post_custom_form_submit', 'sync_wc_from_ext_db_page_save_to_db');
+
+            // Plugin menu-> settings menulink
+            //add_filter( "plugin_action_links_$this->plugin", array( $this, 'settings_link') );
         }
+
+        /*public function settings_link( $links ) {
+            $settings_link = '<a href="options-general.php?page=sync_wc_from_ext_db">Settings</a>';
+            array_push( $links, $settings_link );
+            return $links;
+        }*/
 
         function activate() {
             require_once plugin_dir_path(__FILE__) . 'inc/sync-wc-from-ext-db-activate.php';
@@ -57,7 +73,7 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
         }
 
         public function add_admin_pages() {
-            $page_title = 'Sync WC from Ext DB';
+            $page_title = 'Sync WC from Ext DB Plugin';
             $menu_title = 'Sync WC';
             $capability = 'manage_options';
             $menu_slug  = 'sync_wc_from_ext_db';
@@ -67,7 +83,7 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
             add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
         }
 
-        public function  add_admin_subpages() {
+        public function add_admin_subpages() {
             add_submenu_page('sync_wc_from_ext_db',
                              'Database list',
                              'Database list',

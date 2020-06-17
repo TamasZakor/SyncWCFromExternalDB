@@ -3,8 +3,6 @@
 * @package SyncWCFromExtDB
 */
 
-require_once plugin_dir_path(__FILE__) . '../functions/save-ext-db-data.php';
-
 function sync_wc_from_ext_db_page() {
     $admin_page = '<h1 id="H1-admin">
                      <p>Synchronize Woocommerce product stock with extern databasa</p>
