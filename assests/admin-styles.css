@@ -11,4 +11,35 @@
 #connection_list_page th,
 #connection_list_page td {
     border: 1px solid black;
+    text-align: center;
+    font-size: 15px;
+    padding: 5px 0;
+}
+
+select#dbtype {
+    font-size: 15px;
+    text-align: center;
+}
+
+#connection_list_page td input {
+    font-size: 15px;
+    text-align: center;
+}
+
+#connection_list_page td input#delete {
+    font-size: 15px;
+    text-align: center;
+    margin: 0px 10px;
+    background-color: burlywood;
+}
+
+#connection_list_page td input#update {
+    font-size: 15px;
+    text-align: center;
+    margin: 0px 10px;
+    background-color: aquamarine;
+}
+
+#connection_list_page tr#hidden {
+    display: none;
 }

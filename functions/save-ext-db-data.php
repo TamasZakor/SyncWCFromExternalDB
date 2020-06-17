@@ -5,8 +5,6 @@
 
 function sync_wc_from_ext_db_page_save_to_db() {
     global $wpdb;
-    print_r($_POST);
-    
     $table_name = $wpdb->prefix . 'externalDBdata';
     $wpdb->insert(
         $table_name,
@@ -22,6 +20,5 @@ function sync_wc_from_ext_db_page_save_to_db() {
         )
     );
     
-    print('Update succesful!');
     wp_redirect(admin_url('admin.php?page=sync_wc_from_ext_db'));
 }
