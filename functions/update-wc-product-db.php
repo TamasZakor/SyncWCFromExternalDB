@@ -52,7 +52,7 @@ function sync_wc_from_ext_db_shop_display_skus() {
     global $product;
     if ( $product->get_stock_quantity() ) { // if manage stock is enabled
         $link = admin_url('admin-ajax.php?action=sync_wc_from_ext_db_ajax_call&product_id='. $product->get_id());
-        echo '<a id="refresh_product" data-product_id="' .$product->get_id() . '" href="'. $link . '"> Update </a>';
+        echo '<a id="refresh_product" data-product_id="' .$product->get_id() . '" href="'. $link . '" style="display:none;"> Update </a>';
     }
 }
 

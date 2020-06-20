@@ -16,7 +16,7 @@ $(document).ready(function() {
             data: data,
             success: function(response) {
                 if ($('p.stock.in-stock').length) {
-                    $("p.stock.in-stock")[0].innerHTML = response['stock_quantity'] + "    in stock";
+                    $("p.stock.in-stock")[0].innerHTML = response['stock_quantity'] + " in stock";
                 }
             },
             error: function(errorThrown) {
