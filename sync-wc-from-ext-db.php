@@ -49,11 +49,14 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
             add_action( 'admin_enqueue_scripts', array($this, 'enqueue') );
 
             // hook custom css on fron-end side
-            //add_action( 'wp_enqueue_scripts', array($this, 'enqueue') );
+            require_once plugin_dir_path(__FILE__) . 'functions/update-stock-ajax.php';
+            add_action( 'wp_ajax_sync_wc_from_ext_db_ajax_call', 'sync_wc_from_ext_db_ajax_call');
+            add_action( 'wp_ajax_nopriv_sync_wc_from_ext_db_ajax_call', 'sync_wc_from_ext_db_ajax_call' );
+            add_action( 'wp_enqueue_scripts', array($this, 'front_end_enqueue') );
 
             add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
             add_action( 'admin_menu', array( $this, 'add_admin_subpages' ) );
-            
+
             // Add external db data
             require_once plugin_dir_path(__FILE__) . 'functions/save-ext-db-data.php';
             add_action ( 'admin_post_add_connection_form_submit', 'sync_wc_from_ext_db_page_save_to_db');
@@ -62,6 +65,10 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
             require_once plugin_dir_path(__FILE__) . 'functions/update-connection-list-db.php';
             add_action ( 'admin_post_update_connection_form_submit', 'sync_wc_from_ext_db_update_connection_list_db');
             add_action ( 'admin_post_delete_connection_form_submit', 'sync_wc_from_ext_db_delete_connection_list_db');
+
+            //Call product sync on single product page
+            require_once plugin_dir_path(__FILE__) . 'functions/update-wc-product-db.php';
+            add_action( 'woocommerce_before_single_product', 'sync_wc_from_ext_db_check_requirement', 10, 0 );
 
             // Plugin menu-> settings menulink
             //add_filter( "plugin_action_links_$this->plugin", array( $this, 'settings_link') );
@@ -112,10 +119,15 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
 
         function enqueue() {
             // enqueeu all our scripts
-            wp_enqueue_style( 'myPluginstyle', plugins_url( '/assests/admin-styles.css', __FILE__ ), array(), false, false );
-            wp_enqueue_script( 'myPluginstyle', plugins_url( '/assests/admin-scripts.js', __FILE__ ), array( 'jquery' ), null, true );
+            wp_enqueue_style( 'sync_wc_from_ext_db_admin_style', plugins_url( '/assests/admin-styles.css', __FILE__ ), array(), false, false );
+            wp_enqueue_script( 'sync_wc_from_ext_db_admin_script', plugins_url( '/assests/admin-scripts.js', __FILE__ ), array( 'jquery' ), null, true );
         }
 
+        function front_end_enqueue() {
+            // enqueeu all our scripts
+            wp_enqueue_script( 'frontend-ajax', plugins_url( '/assests/sync_wc_from_ext_db_frontend_script.js', __FILE__ ), array('jquery'), false, false );
+            wp_localize_script( 'frontend-ajax', 'sync_wc_from_ext_db_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        }
     }
 
     if ( class_exists( 'SyncWCFromExtDB' ) ) {

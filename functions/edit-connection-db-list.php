@@ -92,12 +92,4 @@ function sync_wc_from_ext_db_connection_list() {
            </div>';
     }
     print($html);
-
-    require_once plugin_dir_path(__FILE__) . 'update-wc-product-db.php';
-    if ( class_exists( 'Woocommerce' ) ) {
-        sync_wc_from_ext_db_query_from_extern_db();
-    } else {
-        echo 'Woocommerce does not installed!';
-        die;
-    }
 }
