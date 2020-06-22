@@ -63,6 +63,7 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
 
             // Update external db data
             require_once plugin_dir_path(__FILE__) . 'functions/update-connection-list-db.php';
+            add_action ( 'admin_post_update_active_connection_form_submit', 'sync_wc_from_ext_db_activate_connection_list_db');
             add_action ( 'admin_post_update_connection_form_submit', 'sync_wc_from_ext_db_update_connection_list_db');
             add_action ( 'admin_post_delete_connection_form_submit', 'sync_wc_from_ext_db_delete_connection_list_db');
 
@@ -119,8 +120,8 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
 
         function enqueue() {
             // enqueeu all our scripts
-            wp_enqueue_style( 'sync_wc_from_ext_db_admin_style', plugins_url( '/assests/admin-styles.css', __FILE__ ), array(), false, false );
-            wp_enqueue_script( 'sync_wc_from_ext_db_admin_script', plugins_url( '/assests/admin-scripts.js', __FILE__ ), array( 'jquery' ), null, true );
+            wp_enqueue_style( 'sync_wc_from_ext_db_admin_style', plugins_url( '/assests/admin-styles.css', __FILE__ ), array(), null, false );
+            wp_enqueue_script( 'sync_wc_from_ext_db_admin_script', plugins_url( '/assests/admin-scripts.js', __FILE__ ), array( 'jquery' ), false, false );
         }
 
         function front_end_enqueue() {

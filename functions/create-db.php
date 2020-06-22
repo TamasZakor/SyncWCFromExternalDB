@@ -18,6 +18,7 @@ $sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name .'(
     table_name varchar(55) NOT NULL,
     product_column_name varchar(55) NOT NULL,
     product_stock_column_name varchar(55) NOT NULL,
+    active varchar(55) DEFAULT "no",
     PRIMARY KEY (id)
     ) ' . $charset_collate . '; ';
 

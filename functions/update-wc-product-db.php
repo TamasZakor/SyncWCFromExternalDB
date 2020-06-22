@@ -15,12 +15,12 @@ if ( class_exists( 'Woocommerce' ) ) {
 
 function sync_wc_from_ext_db_query_product_stock_from_extern_db() {
     global $wpdb;
-    $result = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->prefix . 'externaldbdata' );
+    $result = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->prefix . 'externaldbdata WHERE active LIKE "yes"' );
     if ( $result) {
         if ( $result[0]->sql_type == "mysql" ) {
             $conn = mysqli_connect($result[0]->host, $result[0]->username, $result[0]->pw, $result[0]->db_name);
             if ( ! $conn) {
-                die("Can't connect to external db!</br>");
+                die("Can't connect to external mysql db!</br>");
             }
 
             $sql = 'SELECT ' . $result[0]->product_column_name . ', '  . $result[0]->product_stock_column_name . ' FROM ' . $result[0]->table_name .';';
@@ -44,6 +44,37 @@ function sync_wc_from_ext_db_query_product_stock_from_extern_db() {
             } else {
                 echo "Could not query any data!";
             }
+        } else if ( $result[0]->sql_type == "mssql" ) {
+            $servername = $result[0]->host;
+            $connectioninfo = array( "Database" =>  $result[0]->db_name, "UID" => $result[0]->username, "PWD" => $result[0]->pw );
+            $conn = sqlsrv_connect( $servername, $connectioninfo );
+            if ( $conn === false ) {
+                die( print_r( sqlsrv_errors(), true ) );
+            }
+
+            $sql = 'SELECT ' . $result[0]->product_column_name . ', '  . $result[0]->product_stock_column_name . ' FROM ' . $result[0]->table_name .';';
+            $query = sqlsrv_query( $conn, $sql);
+
+            if ( !$query ) {
+                echo "Error in statement execution.<br>\n";
+                die( print_r( sqlsrv_errors(), true));
+            }
+
+            while ( $row = sqlsrv_fetch_array($query, SQLSRV_FETCH_NUMERIC ) ) {
+                $wpdb->update(
+                    $wpdb->prefix . 'wc_product_meta_lookup',
+                    array( 'stock_quantity' => $row[1] ),
+                    array( 'sku' => $row[0] )
+                );
+                $product_id = $wpdb->get_results( 'SELECT post_id FROM ' . $wpdb->prefix . 'postmeta WHERE meta_value = "' . $row[0] .'";' );
+                $wpdb->update(
+                    $wpdb->prefix . 'postmeta',
+                    array( 'meta_value' => $row[1] ),
+                    array( 'meta_key' => '_stock' , 'post_id' => $product_id[0]->post_id )
+                );
+            }
+            sqlsrv_free_stmt( $query );
+            sqlsrv_close( $conn);
         }
     }
 }

@@ -10,15 +10,16 @@ function sync_wc_from_ext_db_connection_list() {
     $html .= '<table class="research">
                 <tbody>
                     <tr>
-                    <th>SQL type</th>
-                    <th>Server host</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Database name</th>
-                    <th>Table name</th>
-                    <th>Product column name</th>
-                    <th>Product stock column name</th>
-                    <th colspan="2">Action</th>
+                        <th>SQL type</th>
+                        <th>Server host</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Database name</th>
+                        <th>Table name</th>
+                        <th>Product column name</th>
+                        <th>Product stock column name</th>
+                        <th colspan="2">Action</th>
+                        <th>Active</th>
                     </tr>';
     foreach ( $result as $row) {
         $html .=   '<tr class="accordion">
@@ -30,9 +31,16 @@ function sync_wc_from_ext_db_connection_list() {
                         <td>' . $row->table_name .'</td>
                         <td>' . $row->product_column_name .'</td>
                         <td>' . $row->product_stock_column_name .'</td>
-                        <td colspan="2"><button type="button" id="edit_connection">Edit</button></td>
+                        <td colspan="2"><button type="button" class="select_connection" id="edit_connection-' . $row->id .'">Edit</button></td>
+                        <td>';
+                        if ( $row->active == "no" ) {
+                            $html .=  'Disable';
+                        } else {
+                            $html .=  'Enable';
+                        }
+        $html .=        '</td>
                     </tr>
-                    <tr class="fold" id="hidden">
+                    <tr class="fold" id="hidden-' . $row->id .'">
                         <form id="ext_data_form" name="ext_data_form" method="POST" action="' . esc_attr('admin-post.php') . '">
                             <td>
                             <select name="dbtype" id="dbtype">
@@ -75,21 +83,35 @@ function sync_wc_from_ext_db_connection_list() {
                             </td>
                             <td>
                             <input type="hidden" id="dbproductsstock" name="id" value="' . $row->id .'">
-                            <input type="hidden" id="dbsubmit" name="action"  value="update_connection_form_submit">
+                            <input type="hidden" id="dbsubmit" name="action" value="update_connection_form_submit">
                             <input id="update" type="submit" value="Update">
                             </td>
                         </form>
                         <form id="ext_data_form" name="ext_data_form" method="POST" action="' . esc_attr('admin-post.php') . '">
                             <td>
                                 <input type="hidden" id="dbproductsstock" name="id" value="' . $row->id .'">
-                                <input type="hidden" id="dbsubmit" name="action"  value="delete_connection_form_submit">
+                                <input type="hidden" id="dbsubmit" name="action" value="delete_connection_form_submit">
                                 <input id="delete" type="submit" value="Delete">
-                            </d>
+                            </td>
                         </form>
-                    </tr>
-                </tbody>
-            </table>
-           </div>';
+                        <form id="ext_data_form" name="ext_data_form" method="POST" action="' . esc_attr('admin-post.php') . '">
+                            <td>
+                                <input type="hidden" id="dbactive" name="id" value="' . $row->id .'">
+                                <input type="hidden" id="dbactive" name="action" value="update_active_connection_form_submit">
+                                <input id="activate" type="submit" value="';
+                                if ( $row->active == "yes" ) {
+                                    $html .=  'Disable';
+                                } else {
+                                    $html .=  'Enable';
+                                }
+    $html .=                    '">
+                            </td>
+                        </form>
+                    </tr>';
     }
+
+    $html .= '      </tbody>
+                </table>
+              </div>';
     print($html);
 }

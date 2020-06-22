@@ -40,6 +40,6 @@ select#dbtype {
     background-color: aquamarine;
 }
 
-#connection_list_page tr#hidden {
+#connection_list_page .fold {
     display: none;
 }

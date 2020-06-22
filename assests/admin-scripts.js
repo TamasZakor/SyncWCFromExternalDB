@@ -1,5 +1,9 @@
 var $ = jQuery.noConflict();
 
-$("#edit_connection").click(function() {
-    $("#connection_list_page tr#hidden").toggle();
+$(document).ready(function() {
+    $("button.select_connection").click(function() {
+        var id = $(this).attr('id');
+        var res = id.split("-");
+        $("tr#hidden-" + res[1]).toggle();
+    });
 });
