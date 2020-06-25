@@ -70,6 +70,10 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
             //Call product sync on single product page
             require_once plugin_dir_path(__FILE__) . 'functions/update-wc-product-db.php';
             add_action( 'woocommerce_before_single_product', 'sync_wc_from_ext_db_check_requirement', 10, 0 );
+            add_action( 'woocommerce_before_cart', 'sync_wc_from_ext_db_check_requirement', 10, 0 );
+            add_action( 'woocommerce_before_shop_loop', 'sync_wc_from_ext_db_check_requirement', 10, 0 );
+            add_action( 'woocommerce_before_checkout_form_cart_notices', 'sync_wc_from_ext_db_check_requirement', 10, 0 );
+            add_action( 'woocommerce_before_checkout_form', 'sync_wc_from_ext_db_check_requirement', 10, 0 );
 
             // Plugin menu-> settings menulink
             //add_filter( "plugin_action_links_$this->plugin", array( $this, 'settings_link') );
