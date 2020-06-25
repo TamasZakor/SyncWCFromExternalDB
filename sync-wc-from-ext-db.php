@@ -75,6 +75,9 @@ if ( !class_exists( 'SyncWCFromExtDB') ) {
             add_action( 'woocommerce_before_checkout_form_cart_notices', 'sync_wc_from_ext_db_check_requirement', 10, 0 );
             add_action( 'woocommerce_before_checkout_form', 'sync_wc_from_ext_db_check_requirement', 10, 0 );
 
+            // send mail after order product(s)
+            require_once plugin_dir_path(__FILE__) . 'functions/send-mail-after-order.php';
+            add_action('woocommerce_thankyou', 'sync_wc_from_ext_db_send_mail_after_order');
             // Plugin menu-> settings menulink
             //add_filter( "plugin_action_links_$this->plugin", array( $this, 'settings_link') );
         }
